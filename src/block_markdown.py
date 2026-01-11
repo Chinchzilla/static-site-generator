@@ -75,7 +75,10 @@ def block_to_html_node(block: str) -> ParentNode:
         case BlockType.CODE:
             code_block_delimeter: str = BlockType.CODE.value * 3
             pure_code_block: str = (
-                block.strip().lstrip(code_block_delimeter).rstrip(code_block_delimeter)
+                block.strip()
+                .lstrip(code_block_delimeter)
+                .rstrip(code_block_delimeter)
+                .strip("\n")
             )
             return ParentNode(
                 tag="pre", children=[LeafNode(tag="code", value=pure_code_block)]

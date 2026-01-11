@@ -312,7 +312,7 @@ def my_function():
         node_html = node.to_html()
         self.assertEqual(
             node_html,
-            "<div><pre><code>\ndef my_function():\n    pass\n</code></pre></div>",
+            "<div><pre><code>def my_function():\n    pass</code></pre></div>",
         )
 
     def test_code_block_doesnt_mess_with_formatting(self):
@@ -324,7 +324,7 @@ def my_function():
         node_html = node.to_html()
         self.assertEqual(
             node_html,
-            "<div><pre><code>\n# This **text** should _remain_ unchanged. `No` exceptions!\n</code></pre></div>",
+            "<div><pre><code># This **text** should _remain_ unchanged. `No` exceptions!</code></pre></div>",
         )
 
     def test_unordered_list(self):
@@ -413,7 +413,7 @@ This paragraph should be **properly** _formatted_. Including `code`.
             "<h5>Heading 5</h5>"
             "<h6>Heading 6</h6>"
             '<blockquote>"I am in fact a Hobbit in all but size." -- J.R.R. Tolkien</blockquote>'
-            "<pre><code>\ndef my_function():\n    pass # This comment has **formatting** and `backticks` and _italics_\n</code></pre>"
+            "<pre><code>def my_function():\n    pass # This comment has **formatting** and `backticks` and _italics_</code></pre>"
             "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"
             "<ol><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol>"
             '<p><img src="image.jpg" alt="Image"> '
