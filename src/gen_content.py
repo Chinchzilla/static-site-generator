@@ -31,7 +31,9 @@ def copy_from_dir_to_dir(from_dir: Path, to_dir: Path) -> None:
             copy_from_dir_to_dir(file, to_dir.joinpath(file.name).resolve())
 
 
-def generate_page(from_path: Path, template_path: Path, to_path: Path) -> None:
+def generate_page(
+    from_path: Path, template_path: Path, to_path: Path, basepath: str
+) -> None:
     print(
         f"Generating page from {from_path.name} to {to_path.name} using {template_path.name}"
     )
@@ -47,9 +49,12 @@ def generate_page(from_path: Path, template_path: Path, to_path: Path) -> None:
     page_title: str = extract_title(from_content).strip()
     page_content: str = markdown_to_html(from_content.strip()).to_html()
 
-    html_from_template: str = template_content.replace(
-        "{{ Title }}", page_title
-    ).replace("{{ Content }}", page_content)
+    html_from_template: str = (
+        template_content.replace("{{ Title }}", page_title)
+        .replace("{{ Content }}", page_content)
+        .replace('href="/', f'href="{basepath}')
+        .replace('src="/', f'src="{basepath}')
+    )
 
     if not to_path.parent.is_dir():
         print(f"Creating dir {to_path.parent}")
@@ -60,15 +65,21 @@ def generate_page(from_path: Path, template_path: Path, to_path: Path) -> None:
         _: int = to_file.write(html_from_template)
 
 
-def generate_pages(from_dir: Path, template_path: Path, to_dir: Path) -> None:
+def generate_pages_recursive(
+    from_dir: Path, template_path: Path, to_dir: Path, basepath: str
+) -> None:
     print("Generating pages from", from_dir.name, "to", to_dir.name)
     for file in from_dir.iterdir():
         if file.suffix == ".md":
             print("Found '.md' file to be converted", file.name)
-            generate_page(file, template_path, to_dir.joinpath(file.stem + ".html"))
+            generate_page(
+                file, template_path, to_dir.joinpath(file.stem + ".html"), basepath
+            )
         elif file.is_dir():
             print("Found directory, recursing into it", file.name)
-            generate_pages(file, template_path, to_dir.joinpath(file.name))
+            generate_pages_recursive(
+                file, template_path, to_dir.joinpath(file.name), basepath
+            )
 
 
 def extract_title(markdown: str) -> str:
