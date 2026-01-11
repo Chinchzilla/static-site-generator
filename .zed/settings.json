@@ -1,0 +1,9 @@
+{
+  "languages": {
+    "Python": {
+      "preferred_line_length": 120
+    }
+  },
+  "soft_wrap": "none",
+  "project_name": "Static Site Generator"
+}
