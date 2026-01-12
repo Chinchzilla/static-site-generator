@@ -300,7 +300,7 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
         node_html = node.to_html()
         self.assertEqual(
             node_html,
-            '<div><blockquote>"I am in fact a Hobbit in all but size." -- J.R.R. Tolkien</blockquote></div>',
+            "<div><blockquote>&quot;I am in fact a Hobbit in all but size.&quot; -- J.R.R. Tolkien</blockquote></div>",
         )
 
     def test_code_block(self):
@@ -412,7 +412,7 @@ This paragraph should be **properly** _formatted_. Including `code`.
             "<h4>Heading 4</h4>"
             "<h5>Heading 5</h5>"
             "<h6>Heading 6</h6>"
-            '<blockquote>"I am in fact a Hobbit in all but size." -- J.R.R. Tolkien</blockquote>'
+            "<blockquote>&quot;I am in fact a Hobbit in all but size.&quot; -- J.R.R. Tolkien</blockquote>"
             "<pre><code>def my_function():\n    pass # This comment has **formatting** and `backticks` and _italics_</code></pre>"
             "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"
             "<ol><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol>"

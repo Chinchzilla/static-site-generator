@@ -1,3 +1,4 @@
+import html
 from enum import Enum
 from typing import override
 
@@ -39,22 +40,26 @@ class TextNode:
 def text_node_to_html_node(text_node: TextNode) -> LeafNode:
     match text_node.text_type:
         case TextType.TEXT:
-            return LeafNode(tag=None, value=text_node.text)
+            return LeafNode(tag=None, value=html.escape(text_node.text))
         case TextType.BOLD:
-            return LeafNode(tag="b", value=text_node.text)
+            return LeafNode(tag="b", value=html.escape(text_node.text))
         case TextType.ITALIC:
-            return LeafNode(tag="i", value=text_node.text)
+            return LeafNode(tag="i", value=html.escape(text_node.text))
         case TextType.CODE:
             return LeafNode(tag="code", value=text_node.text)
         case TextType.LINK:
             if text_node.url is None:
                 raise ValueError("URL is required for LINK text type")
             return LeafNode(
-                tag="a", value=text_node.text, props={"href": text_node.url}
+                tag="a",
+                value=html.escape(text_node.text),
+                props={"href": text_node.url},
             )
         case TextType.IMAGE:
             if text_node.url is None:
                 raise ValueError("URL is required for IMAGE text type")
             return LeafNode(
-                tag="img", value="", props={"src": text_node.url, "alt": text_node.text}
+                tag="img",
+                value="",
+                props={"src": text_node.url, "alt": html.escape(text_node.text)},
             )
