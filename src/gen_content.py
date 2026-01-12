@@ -52,8 +52,8 @@ def generate_page(
     html_from_template: str = (
         template_content.replace("{{ Title }}", page_title)
         .replace("{{ Content }}", page_content)
-        .replace('href="/', f'href="{basepath}')
-        .replace('src="/', f'src="{basepath}')
+        .replace('href="/', f'href="{basepath}"')
+        .replace('src="/', f'src="{basepath}"')
     )
 
     if not to_path.parent.is_dir():
